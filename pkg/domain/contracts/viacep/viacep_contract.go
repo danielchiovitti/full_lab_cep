@@ -1,6 +1,7 @@
 package viacep
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"full_cycle_cep/pkg/domain/models"
@@ -42,7 +43,11 @@ func (v *ViaCepContract) GetCep(cep string) (*models.ViaCepContractModel, error)
 
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: tr}
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error creating client:", err)

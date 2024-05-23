@@ -1,9 +1,15 @@
-FROM golang:1.22 as build
+FROM golang:1.21-alpine as build
 WORKDIR /app
 COPY . .
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o cloudrun
+EXPOSE 3500
+RUN apk update && apk add --no-cache ca-certificates
+
+RUN update-ca-certificates
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o cloudrun ./cmd/full_cep/main.go
+
 
 FROM scratch
 WORKDIR /app
 COPY --from=build /app/cloudrun .
+EXPOSE 3500
 ENTRYPOINT ["./cloudrun"]

@@ -1,6 +1,7 @@
 package weatherapi
 
 import (
+	"crypto/tls"
 	"encoding/json"
 	"fmt"
 	"full_cycle_cep/pkg/domain/models"
@@ -55,7 +56,11 @@ func (w *WeatherApiContract) GetWeatherInfo(city string) (*models.WeatherApiMode
 		return nil, err
 	}
 
-	client := &http.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	client := &http.Client{Transport: tr}
 	resp, err := client.Do(req)
 	if err != nil {
 		fmt.Println("Error creating client:", err)
