@@ -9,7 +9,7 @@ import (
 	"full_cycle_cep/pkg/domain/contracts/weatherapi"
 	"full_cycle_cep/pkg/domain/use_cases/viacep/get_viacep"
 	"full_cycle_cep/pkg/presentation/http"
-	"full_cycle_cep/pkg/presentation/http/help"
+	"full_cycle_cep/pkg/presentation/http/cep"
 	"full_cycle_cep/pkg/shared/log"
 	"github.com/google/wire"
 )
@@ -23,7 +23,7 @@ var superset = wire.NewSet(
 	weatherapi.NewWeatherApiContract,
 	wire.Bind(new(get_viacep.GetViaCepUseCaseInterface), new(*get_viacep.GetViaCepUseCase)),
 	get_viacep.NewGetViaCepUseCase,
-	help.NewCreateHelpRoute,
+	cep.NewCreateCepRoute,
 	middleware.NewCepValidationMiddleware,
 
 	http.ProvideHandlers,

@@ -1,4 +1,4 @@
-package help
+package cep
 
 import (
 	"encoding/json"
@@ -13,41 +13,40 @@ import (
 )
 
 var lock sync.Mutex
-var createHelpRouteInstance CreateHelpRoute
+var createCepRouteInstance CreateCepRoute
 
-type CreateHelpRoute struct {
-	logger                  log.LoggerManagerInterface
-	getViaCepUseCase        get_viacep.GetViaCepUseCaseInterface
-	cepValidationMiddleware middleware.CepValidationMiddleware
+type CreateCepRoute struct {
+	logger                    log.LoggerManagerInterface
+	getViaCepUseCase          get_viacep.GetViaCepUseCaseInterface
+	RtCepValidationMiddleware middleware.CepValidationMiddleware
 }
 
-func NewCreateHelpRoute(
+func NewCreateCepRoute(
 	logger log.LoggerManagerInterface,
 	getViaCepUseCase get_viacep.GetViaCepUseCaseInterface,
-) CreateHelpRoute {
-	if createHelpRouteInstance == (CreateHelpRoute{}) {
+) CreateCepRoute {
+	if createCepRouteInstance == (CreateCepRoute{}) {
 		lock.Lock()
 		defer lock.Unlock()
-		if createHelpRouteInstance == (CreateHelpRoute{}) {
-			createHelpRouteInstance = CreateHelpRoute{
+		if createCepRouteInstance == (CreateCepRoute{}) {
+			createCepRouteInstance = CreateCepRoute{
 				logger:           logger,
 				getViaCepUseCase: getViaCepUseCase,
 			}
 		}
 	}
-	return createHelpRouteInstance
+	return createCepRouteInstance
 }
 
-func (c *CreateHelpRoute) GetHelpRoute() *chi.Mux {
+func (c *CreateCepRoute) GetCepRoute() *chi.Mux {
 	r := chi.NewRouter()
-	r.With(c.cepValidationMiddleware.Validate).Get("/{cep}", c.get)
+	r.With(c.RtCepValidationMiddleware.Validate).Get("/{cep}", c.Get)
 	return r
 }
 
-func (c *CreateHelpRoute) get(w http.ResponseWriter, r *http.Request) {
+func (c *CreateCepRoute) Get(w http.ResponseWriter, r *http.Request) {
 	cep := chi.URLParam(r, "cep")
 	res, err := c.getViaCepUseCase.Execute(cep)
-	//er := &business_error.BusinessError{}
 
 	if err != nil {
 		if cepNotFoundErr, ok := err.(*business_error.BusinessError); ok {

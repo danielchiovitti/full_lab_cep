@@ -1,28 +1,28 @@
 package http
 
 import (
-	"full_cycle_cep/pkg/presentation/http/help"
+	"full_cycle_cep/pkg/presentation/http/cep"
 	"full_cycle_cep/pkg/shared/log"
 	"github.com/go-chi/chi/v5"
 )
 
 type Handlers struct {
-	logger          log.LoggerManagerInterface
-	createHelpRoute help.CreateHelpRoute
+	logger           log.LoggerManagerInterface
+	HnCreateCepRoute cep.CreateCepRoute
 }
 
 func ProvideHandlers(
 	logger log.LoggerManagerInterface,
-	createHelpRoute help.CreateHelpRoute,
+	createCepRoute cep.CreateCepRoute,
 ) *Handlers {
 	return &Handlers{
-		logger:          logger,
-		createHelpRoute: createHelpRoute,
+		logger:           logger,
+		HnCreateCepRoute: createCepRoute,
 	}
 }
 
 func (h *Handlers) GetRoutes() *chi.Mux {
 	r := chi.NewRouter()
-	r.Mount("/help", h.createHelpRoute.GetHelpRoute())
+	r.Mount("/cep", h.HnCreateCepRoute.GetCepRoute())
 	return r
 }

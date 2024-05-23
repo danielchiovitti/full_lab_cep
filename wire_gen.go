@@ -12,7 +12,7 @@ import (
 	"full_cycle_cep/pkg/domain/contracts/weatherapi"
 	"full_cycle_cep/pkg/domain/use_cases/viacep/get_viacep"
 	"full_cycle_cep/pkg/presentation/http"
-	"full_cycle_cep/pkg/presentation/http/help"
+	"full_cycle_cep/pkg/presentation/http/cep"
 	"full_cycle_cep/pkg/shared/log"
 	"github.com/google/wire"
 )
@@ -24,11 +24,11 @@ func InitializeHandlers() *http.Handlers {
 	viaCepContract := viacep.NewViaCepContract(loggerManager)
 	weatherApiContract := weatherapi.NewWeatherApiContract()
 	getViaCepUseCase := get_viacep.NewGetViaCepUseCase(loggerManager, viaCepContract, weatherApiContract)
-	createHelpRoute := help.NewCreateHelpRoute(loggerManager, getViaCepUseCase)
-	handlers := http.ProvideHandlers(loggerManager, createHelpRoute)
+	createCepRoute := cep.NewCreateCepRoute(loggerManager, getViaCepUseCase)
+	handlers := http.ProvideHandlers(loggerManager, createCepRoute)
 	return handlers
 }
 
 // wire.go:
 
-var superset = wire.NewSet(wire.Bind(new(log.LoggerManagerInterface), new(*log.LoggerManager)), log.NewLoggerManager, wire.Bind(new(viacep.ViaCepContractInterface), new(*viacep.ViaCepContract)), viacep.NewViaCepContract, wire.Bind(new(weatherapi.WeatherApiContractInterface), new(*weatherapi.WeatherApiContract)), weatherapi.NewWeatherApiContract, wire.Bind(new(get_viacep.GetViaCepUseCaseInterface), new(*get_viacep.GetViaCepUseCase)), get_viacep.NewGetViaCepUseCase, help.NewCreateHelpRoute, middleware.NewCepValidationMiddleware, http.ProvideHandlers)
+var superset = wire.NewSet(wire.Bind(new(log.LoggerManagerInterface), new(*log.LoggerManager)), log.NewLoggerManager, wire.Bind(new(viacep.ViaCepContractInterface), new(*viacep.ViaCepContract)), viacep.NewViaCepContract, wire.Bind(new(weatherapi.WeatherApiContractInterface), new(*weatherapi.WeatherApiContract)), weatherapi.NewWeatherApiContract, wire.Bind(new(get_viacep.GetViaCepUseCaseInterface), new(*get_viacep.GetViaCepUseCase)), get_viacep.NewGetViaCepUseCase, cep.NewCreateCepRoute, middleware.NewCepValidationMiddleware, http.ProvideHandlers)
