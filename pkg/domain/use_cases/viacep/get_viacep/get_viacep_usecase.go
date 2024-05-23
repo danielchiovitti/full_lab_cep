@@ -58,8 +58,8 @@ func (g *GetViaCepUseCase) Execute(cep string) (*models.CepGetResponse, error) {
 	}
 
 	return &models.CepGetResponse{
-		Celsius:    resWeather.Current.TempC,
-		Fahrenheit: (resWeather.Current.TempC * 1.8) + 32,
-		Kelvin:     resWeather.Current.TempC + 273,
+		Temp_C: resWeather.Current.TempC,
+		Temp_F: (resWeather.Current.TempC * 1.8) + 32,
+		Temp_K: resWeather.Current.TempC + 273,
 	}, nil
 }
