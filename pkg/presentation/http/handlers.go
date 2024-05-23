@@ -13,10 +13,11 @@ type Handlers struct {
 
 func ProvideHandlers(
 	logger log.LoggerManagerInterface,
-
+	createHelpRoute help.CreateHelpRoute,
 ) *Handlers {
 	return &Handlers{
-		logger: logger,
+		logger:          logger,
+		createHelpRoute: createHelpRoute,
 	}
 }
 
