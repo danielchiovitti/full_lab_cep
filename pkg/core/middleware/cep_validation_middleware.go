@@ -19,7 +19,7 @@ func NewCepValidationMiddleware() CepValidationMiddleware {
 func (c *CepValidationMiddleware) Validate(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		cep := chi.URLParam(r, "cep")
-		re := regexp.MustCompile(`^\d{5}-\d{3}$`)
+		re := regexp.MustCompile(`^\d{5}\d{3}$`)
 		valid := re.MatchString(cep)
 
 		if !valid {
