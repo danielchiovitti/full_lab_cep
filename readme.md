@@ -14,18 +14,18 @@ go test -v ./...
 
 #### CEP válido
 ````
-curl --location 'http://localhost:3500/cep/05330999'
-curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/05330-011'
+curl --location 'http://localhost:3500/cep/05330011'
+curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/05330011'
 ````
 
 #### CEP não encontrado
 ````
-curl --location 'http://localhost:3500/cep/05330-999'
-curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/05330-999'
+curl --location 'http://localhost:3500/cep/05330999'
+curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/05330999'
 ````
 
 #### CEP inválido
 ````
-curl --location 'http://localhost:3500/cep/05330999'
-curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/05330999'
+curl --location 'http://localhost:3500/cep/053309999'
+curl --location 'https://full-lab-cep-f6b7bmiviq-uc.a.run.app/cep/053309999'
 ````
