@@ -54,6 +54,11 @@ func (c *CreateCepRoute) Get(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, "can not find zipcode", http.StatusNotFound)
 				return
 			}
+
+			if cepNotFoundErr.Message == string(constants.Invalid_Cep) {
+				http.Error(w, "invalid zipcode", http.StatusUnprocessableEntity)
+				return
+			}
 		}
 		http.Error(w, "Error", http.StatusInternalServerError)
 		return

@@ -11,4 +11,5 @@ type ViaCepContractModel struct {
 	Gia         string
 	Ddd         string
 	Siafi       string
+	Erro        bool
 }
