@@ -10,7 +10,7 @@ import (
 )
 
 func TestValidCEP(t *testing.T) {
-	req, err := http.NewRequest("GET", "/cep/05330-011", nil)
+	req, err := http.NewRequest("GET", "/cep/05330011", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -24,7 +24,7 @@ func TestValidCEP(t *testing.T) {
 }
 
 func TestNotFoundCEP(t *testing.T) {
-	req, err := http.NewRequest("GET", "/cep/05330-999", nil)
+	req, err := http.NewRequest("GET", "/cep/05330999", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func TestNotFoundCEP(t *testing.T) {
 }
 
 func TestInvalidCEPFormat(t *testing.T) {
-	req, err := http.NewRequest("GET", "/cep/05330011", nil)
+	req, err := http.NewRequest("GET", "/cep/053309999", nil)
 	if err != nil {
 		t.Fatal(err)
 	}
